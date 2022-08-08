@@ -1,6 +1,5 @@
 package com.etiya.northwind.entities.concretes;
 
-import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,9 +18,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(OrderDetail.class)
-public class OrderDetail implements Serializable{
-//	private static final long serialVersionUID = 1L;
+@IdClass(OrderDetailId.class)
+public class OrderDetail {
+
 	
 	@Column(name="unit_price")
 	private double unitPrice;
