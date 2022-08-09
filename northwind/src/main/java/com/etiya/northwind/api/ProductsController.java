@@ -53,4 +53,19 @@ public class ProductsController {
 	public ProductGetResponse getById(@RequestParam int id) {
 		return this.productService.getById(id);
 	}
+	
+	@GetMapping("/getallbypage")
+    public List<ProductListResponse> getAll(@RequestParam int pageNo,int pageSize){
+        return this.productService.getAll(pageNo,pageSize);
+    }
+
+    @GetMapping("/getallsortedbydesc")
+    public List<ProductListResponse> getAllSortedByDesc(@RequestParam String field){
+        return this.productService.getAllSortedByDesc(field);
+    }
+    
+    @GetMapping("/getallsortedbyasc")
+    public List<ProductListResponse> getAllSortedByAsc(@RequestParam String field){
+        return this.productService.getAllSortedByAsc(field);
+    }
 }

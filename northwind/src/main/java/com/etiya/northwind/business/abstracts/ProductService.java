@@ -2,6 +2,8 @@ package com.etiya.northwind.business.abstracts;
 
 import java.util.List;
 
+
+
 import com.etiya.northwind.business.requests.products.CreateProductRequest;
 import com.etiya.northwind.business.requests.products.DeleteProductRequest;
 import com.etiya.northwind.business.requests.products.UpdateProductRequest;
@@ -14,5 +16,8 @@ public interface ProductService {
 	void delete(DeleteProductRequest deleteProductRequest);
 	void update(UpdateProductRequest updateProductRequest);
 	List<ProductListResponse> getAll();
+	List<ProductListResponse> getAll(int pageNo,int pageSize);
+    List<ProductListResponse> getAllSortedByDesc(String field);
+    List<ProductListResponse> getAllSortedByAsc(String field);
 	ProductGetResponse getById(int id);
 }

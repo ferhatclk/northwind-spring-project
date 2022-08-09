@@ -49,4 +49,9 @@ public class CustomersController {
     public List<CustomerListResponse> getAll(){
         return this.customerService.getAll();
     }
+    
+    @GetMapping("/getbypagenumber")
+    public List<CustomerListResponse> getByPageNumber(@RequestParam int pageNo, int pageSize){
+    	return this.customerService.getByPageNumber(pageNo, pageSize);
+    }
 }

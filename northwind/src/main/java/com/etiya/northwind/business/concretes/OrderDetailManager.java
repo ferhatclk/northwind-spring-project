@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.OrderDetailService;
+import com.etiya.northwind.business.abstracts.OrderService;
+import com.etiya.northwind.business.abstracts.ProductService;
 import com.etiya.northwind.business.requests.orderDetails.CreateOrderDetailRequest;
 import com.etiya.northwind.business.requests.orderDetails.DeleteOrderDetailRequest;
 import com.etiya.northwind.business.requests.orderDetails.UpdateOrderDetailRequest;
@@ -19,10 +21,15 @@ import com.etiya.northwind.entities.concretes.OrderDetail;
 public class OrderDetailManager implements OrderDetailService{
 	private OrderDetailRepository orderDetailRepository;
 	private ModelMapperService modelMapperService;
+	private ProductService productService;
+	private OrderService orderService;
 	
-	public OrderDetailManager(OrderDetailRepository orderDetailRepository, ModelMapperService modelMapperService) {
+	public OrderDetailManager(OrderDetailRepository orderDetailRepository, ModelMapperService modelMapperService
+			,ProductService productService,OrderService orderService) {
 		this.orderDetailRepository = orderDetailRepository;
 		this.modelMapperService = modelMapperService;
+		this.orderService = orderService;
+		this.productService = productService;
 	}
 
 	@Override
@@ -31,12 +38,14 @@ public class OrderDetailManager implements OrderDetailService{
 		List<OrderDetailListResponse> response = result.stream().map(orderDetail -> this.modelMapperService.forResponse()
 				.map(orderDetail, OrderDetailListResponse.class)).collect(Collectors.toList());
 		
-		
 		return response;
 	}
 
 	@Override
 	public void add(CreateOrderDetailRequest createOrderDetailRequest) {
+//		OrderDetail orderDetail = new OrderDetail();
+//		orderDetail.setOrder(orderService.getById(createOrderDetailRequest.getOrderId()));
+//		
 		OrderDetail orderDetail = this.modelMapperService.forRequest()
 				.map(createOrderDetailRequest, OrderDetail.class);
 		
@@ -56,9 +65,11 @@ public class OrderDetailManager implements OrderDetailService{
 	}
 
 	@Override
-	public OrderDetail getById(OrderDetailGetResponse orderDetailGetResponse) {
-		// TODO Auto-generated method stub
-		return null;
+	public OrderDetailGetResponse getById(int orderId, int productId) {
+		OrderDetail orderDetail = this.orderDetailRepository.getByOrder_OrderIdAndProduct_ProductId(orderId, productId);
+		OrderDetailGetResponse response = this.modelMapperService.forResponse()
+				.map(orderDetail, OrderDetailGetResponse.class);
+		return response;
 	}
 
 }

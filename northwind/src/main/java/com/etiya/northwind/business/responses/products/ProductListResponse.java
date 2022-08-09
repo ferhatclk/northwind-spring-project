@@ -18,11 +18,13 @@ public class ProductListResponse {
 	
 	private int discontinued;
 	
-	private int categoryId;
+	private int categoryCategoryId;
 
-	private String categoryName;
+	private String categoryCategoryName;
 	
-	private int supplierId;
+	private int supplierSupplierId;
 	
 	private String supplierCompanyName;
+	
+	private int totalData;
 }

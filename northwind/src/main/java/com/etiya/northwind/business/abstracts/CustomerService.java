@@ -14,5 +14,6 @@ public interface CustomerService {
 	void delete(DeleteCustomerRequest deleteCustomerRequest);
 	void update(UpdateCustomerRequest updateCustomerRequest);
 	List<CustomerListResponse> getAll();
+	List<CustomerListResponse> getByPageNumber(int pageNo, int pageSize);
 	CustomerGetResponse getById(String customerId);
 }

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.ProductService;
@@ -73,5 +76,38 @@ public class ProductManager implements ProductService{
 				.map(product, ProductGetResponse.class);
 		return productResponse;
 	}
+	
+	@Override
+    public List<ProductListResponse> getAll(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1,pageSize);
+        List<Product> result = this.productRepository.findAll(pageable).getContent();
+        List<ProductListResponse> response = result.stream()
+                .map(supplier -> this.modelMapperService.forResponse().map(supplier, ProductListResponse.class))
+                .collect(Collectors.toList());
+        
+        return response;
+    }
+
+
+
+    @Override
+    public List<ProductListResponse> getAllSortedByDesc(String field) {
+        Sort sort = Sort.by(Sort.Order.desc(field));
+        List<Product> result = this.productRepository.findAll(sort);
+        List<ProductListResponse> response = result.stream()
+                .map(product -> this.modelMapperService.forResponse().map(product, ProductListResponse.class))
+                .collect(Collectors.toList());
+        return response;
+    }
+    
+    @Override
+    public List<ProductListResponse> getAllSortedByAsc(String field) {
+        Sort sort = Sort.by(Sort.Order.asc(field));
+        List<Product> result = this.productRepository.findAll(sort);
+        List<ProductListResponse> response = result.stream()
+                .map(product -> this.modelMapperService.forResponse().map(product, ProductListResponse.class))
+                .collect(Collectors.toList());
+        return response;
+    }
 
 }

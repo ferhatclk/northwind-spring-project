@@ -3,6 +3,8 @@ package com.etiya.northwind.business.concretes;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.CustomerService;
@@ -57,4 +59,15 @@ public class CustomerManager implements CustomerService{
 
         return responses;
     }
+
+	@Override
+	public List<CustomerListResponse> getByPageNumber(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+		
+		List<Customer> result = this.customerRepository.findAll(pageable).getContent();
+		List<CustomerListResponse> response = result.stream().map(customer -> this.modelMapperService.forResponse()
+				.map(customer, CustomerListResponse.class)).collect(Collectors.toList());
+		
+		return response;
+	}
 }
