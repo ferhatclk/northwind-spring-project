@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.OrderDetailService;
-
+import com.etiya.northwind.business.requests.orderDetails.CreateOrderDetailRequest;
+import com.etiya.northwind.business.requests.orderDetails.DeleteOrderDetailRequest;
+import com.etiya.northwind.business.requests.orderDetails.UpdateOrderDetailRequest;
+import com.etiya.northwind.business.responses.orderDetails.OrderDetailGetResponse;
 import com.etiya.northwind.business.responses.orderDetails.OrderDetailListResponse;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
 import com.etiya.northwind.dataAccess.abstracts.OrderDetailRepository;
@@ -30,6 +33,32 @@ public class OrderDetailManager implements OrderDetailService{
 		
 		
 		return response;
+	}
+
+	@Override
+	public void add(CreateOrderDetailRequest createOrderDetailRequest) {
+		OrderDetail orderDetail = this.modelMapperService.forRequest()
+				.map(createOrderDetailRequest, OrderDetail.class);
+		
+		this.orderDetailRepository.save(orderDetail);
+	}
+
+	@Override
+	public void delete(DeleteOrderDetailRequest deleteOrderDetailRequest) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(UpdateOrderDetailRequest updateOrderDetailRequest) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public OrderDetail getById(OrderDetailGetResponse orderDetailGetResponse) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

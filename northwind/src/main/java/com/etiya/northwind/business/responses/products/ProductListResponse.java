@@ -16,6 +16,8 @@ public class ProductListResponse {
 	
 	private int unitsInStock;
 	
+	private int discontinued;
+	
 	private int categoryId;
 
 	private String categoryName;

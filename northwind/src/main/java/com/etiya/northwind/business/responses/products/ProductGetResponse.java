@@ -14,6 +14,8 @@ public class ProductGetResponse {
 	
 	private int unitsInStock;
 	
+	private int discontinued;
+	
 	private int categoryId;
 
 	private String categoryName;

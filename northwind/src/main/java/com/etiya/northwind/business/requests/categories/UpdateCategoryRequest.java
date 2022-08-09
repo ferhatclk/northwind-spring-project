@@ -1,5 +1,13 @@
 package com.etiya.northwind.business.requests.categories;
 
-public class UpdateCategoryRequest {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateCategoryRequest {
+	private int categoryId;
+	private String categoryName;
 }

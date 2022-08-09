@@ -2,10 +2,10 @@ package com.etiya.northwind.entities.concretes;
 
 import java.util.List;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Product {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="product_id")
 	private int productId;
 	
@@ -36,11 +35,14 @@ public class Product {
 	@Column(name="units_in_stock")
 	private int unitsInStock;
 	
+	@Column(name="discontinued")
+	private int discontinued;
+	
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	private Category category;
 	
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product" )
 	private List<OrderDetail> orderDetails;
 	
 	@ManyToOne
