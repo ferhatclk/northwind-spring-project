@@ -50,4 +50,18 @@ public class SuppliersController {
 		return this.supplierService.getAll();
 	}
 	
+	@GetMapping("/getbypageno")
+	public List<SupplierListResponse> getByPageNo(int pageNo, int pageSize){
+		return this.supplierService.getByPageNumber(pageNo, pageSize);
+	}
+	
+	@GetMapping("/getallsortedbydesc")
+	public List<SupplierListResponse> getAllSortedByDesc(@RequestParam String field){
+		return this.supplierService.getAllSortedByDesc(field);
+	}
+	
+	@GetMapping("/getallsortedbyasc")
+	public List<SupplierListResponse> getAllSortedByAsc(@RequestParam String field){
+		return this.supplierService.getAllSortedByAsc(field);
+	}
 }

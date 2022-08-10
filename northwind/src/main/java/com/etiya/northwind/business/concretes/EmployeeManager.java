@@ -3,6 +3,9 @@ package com.etiya.northwind.business.concretes;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.EmployeeService;
@@ -58,5 +61,35 @@ public class EmployeeManager implements EmployeeService{
                 .map(employee, EmployeeListResponse.class)).collect(Collectors.toList());
         return responses;
     }
+
+	@Override
+	public List<EmployeeListResponse> getByPageNumber(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize);
+		
+		List<Employee> result = this.employeeRepository.findAll(pageable).getContent();
+        List<EmployeeListResponse> responses = result.stream().map(employee -> this.modelMapperService.forResponse()
+                .map(employee, EmployeeListResponse.class)).collect(Collectors.toList());
+        return responses;
+	}
+
+	@Override
+	public List<EmployeeListResponse> getAllSortedByDesc(String field) {
+		Sort sort = Sort.by(Sort.Order.desc(field));
+		
+		List<Employee> result = this.employeeRepository.findAll(sort);
+        List<EmployeeListResponse> responses = result.stream().map(employee -> this.modelMapperService.forResponse()
+                .map(employee, EmployeeListResponse.class)).collect(Collectors.toList());
+        return responses;
+	}
+
+	@Override
+	public List<EmployeeListResponse> getAllSortedByAsc(String field) {
+		Sort sort = Sort.by(Sort.Order.asc(field));
+		
+		List<Employee> result = this.employeeRepository.findAll(sort);
+        List<EmployeeListResponse> responses = result.stream().map(employee -> this.modelMapperService.forResponse()
+                .map(employee, EmployeeListResponse.class)).collect(Collectors.toList());
+        return responses;
+	}
 
 }

@@ -13,6 +13,10 @@ public interface SupplierService {
 	void add(CreateSupplierRequest createSupplierRequest);
 	void delete(DeleteSupplierRequest deleteSupplierRequest);
 	void update(UpdateSupplierRequest updateSupplierRequest);
-	List<SupplierListResponse> getAll();
 	SupplierGetResponse getById(int id);
+	List<SupplierListResponse> getAll();
+	List<SupplierListResponse> getByPageNumber(int pageNo,int pageSize);
+    List<SupplierListResponse> getAllSortedByDesc(String field);
+    List<SupplierListResponse> getAllSortedByAsc(String field);
+	
 }

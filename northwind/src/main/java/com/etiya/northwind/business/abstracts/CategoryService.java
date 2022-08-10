@@ -12,6 +12,10 @@ public interface CategoryService {
 	void add(CreateCategoryRequest createCategoryRequest);
 	void delete(DeleteCategoryRequest deleteCategoryRequest);
 	void update(UpdateCategoryRequest updateCategoryRequest);
-	List<CategoryListResponse> getAll();
 	CategoryGetResponse getById(int id);
+	List<CategoryListResponse> getAll();
+	List<CategoryListResponse> getByPageNumber(int pageNo, int pageSize);
+	List<CategoryListResponse> getAllSortedByDesc(String field);
+	List<CategoryListResponse> getAllSortedByAsc(String field);
+	
 }

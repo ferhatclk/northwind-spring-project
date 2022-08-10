@@ -50,4 +50,19 @@ public class OrdersController {
 	public List<OrderListResponse> getAll(){
 		return this.orderService.getAll();
 	}
+	
+	@GetMapping("/getbypageno")
+	public List<OrderListResponse> getByPageNumber(int pageNo, int pageSize){
+		return this.orderService.getByPageNumber(pageNo, pageSize);
+	}
+	
+	@GetMapping("/getallsortedbydesc")
+	public List<OrderListResponse> getAllSortedByDesc(@RequestParam String field){
+		return this.orderService.getAllSortedByDesc(field);
+	}
+	
+	@GetMapping("/getallsortedbyasc")
+	public List<OrderListResponse> getAllSortedByAsc(@RequestParam String field){
+		return this.orderService.getAllSortedByAsc(field);
+	}
 }

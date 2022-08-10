@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.CustomerService;
@@ -69,5 +70,25 @@ public class CustomerManager implements CustomerService{
 				.map(customer, CustomerListResponse.class)).collect(Collectors.toList());
 		
 		return response;
+	}
+
+	@Override
+	public List<CustomerListResponse> getAllSortedByDesc(String field) {
+		Sort sort = Sort.by(Sort.Order.desc(field));
+		List<Customer> result = this.customerRepository.findAll(sort);
+        List<CustomerListResponse> responses = result.stream().map(customer -> this.modelMapperService.forResponse()
+                .map(customer, CustomerListResponse.class)).collect(Collectors.toList());
+
+        return responses;
+	}
+
+	@Override
+	public List<CustomerListResponse> getAllSortedByAsc(String field) {
+		Sort sort = Sort.by(Sort.Order.asc(field));
+		List<Customer> result = this.customerRepository.findAll(sort);
+        List<CustomerListResponse> responses = result.stream().map(customer -> this.modelMapperService.forResponse()
+                .map(customer, CustomerListResponse.class)).collect(Collectors.toList());
+
+        return responses;
 	}
 }

@@ -25,11 +25,6 @@ public class EmployeesController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/getall")
-    public List<EmployeeListResponse> getAll(){
-        return this.employeeService.getAll();
-    }
-
     @PostMapping("/add")
     public void add(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
         this.employeeService.add(createEmployeeRequest);
@@ -49,5 +44,24 @@ public class EmployeesController {
     public EmployeeGetResponse getById(@RequestParam int id) {
         return this.employeeService.getById(id);
     }
+
+    @GetMapping("/getall")
+    public List<EmployeeListResponse> getAll(){
+        return this.employeeService.getAll();
+    }
 	
+    @GetMapping("/getbypageno")
+	public List<EmployeeListResponse> getByPageNo(int pageNo, int pageSize){
+		return this.employeeService.getByPageNumber(pageNo, pageSize);
+	}
+	
+	@GetMapping("/getallsortedbydesc")
+	public List<EmployeeListResponse> getAllSortedByDesc(@RequestParam String field){
+		return this.employeeService.getAllSortedByDesc(field);
+	}
+	
+	@GetMapping("/getallsortedbyasc")
+	public List<EmployeeListResponse> getAllSortedByAsc(@RequestParam String field){
+		return this.employeeService.getAllSortedByAsc(field);
+	}
 }

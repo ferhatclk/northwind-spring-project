@@ -50,8 +50,19 @@ public class CustomersController {
         return this.customerService.getAll();
     }
     
-    @GetMapping("/getbypagenumber")
+    @GetMapping("/getbypageno")
     public List<CustomerListResponse> getByPageNumber(@RequestParam int pageNo, int pageSize){
     	return this.customerService.getByPageNumber(pageNo, pageSize);
     }
+    
+    @GetMapping("/getallsortedbydesc")
+	public List<CustomerListResponse> getAllSortedByDesc(@RequestParam String field){
+		return this.customerService.getAllSortedByDesc(field);
+	}
+	
+	@GetMapping("/getallsortedbyasc")
+	public List<CustomerListResponse> getAllSortedByAsc(@RequestParam String field){
+		return this.customerService.getAllSortedByAsc(field);
+	}
+    
 }

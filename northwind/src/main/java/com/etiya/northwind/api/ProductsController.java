@@ -2,6 +2,8 @@ package com.etiya.northwind.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +32,7 @@ public class ProductsController {
 	}
 	
 	@PostMapping("/add")
-	public void add(@RequestBody CreateProductRequest createProductRequest) {
+	public void add(@Valid @RequestBody CreateProductRequest createProductRequest) {
 		this.productService.add(createProductRequest);
 	}
 	
@@ -44,14 +46,14 @@ public class ProductsController {
 		this.productService.update(updateProductRequest);
 	}
 	
-	@GetMapping("/getall")
-	public List<ProductListResponse> getAll(){
-		return this.productService.getAll();
-	}
-	
 	@GetMapping("/getbyid")
 	public ProductGetResponse getById(@RequestParam int id) {
 		return this.productService.getById(id);
+	}
+	
+	@GetMapping("/getall")
+	public List<ProductListResponse> getAll(){
+		return this.productService.getAll();
 	}
 	
 	@GetMapping("/getallbypage")

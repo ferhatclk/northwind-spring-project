@@ -15,5 +15,7 @@ public interface CustomerService {
 	void update(UpdateCustomerRequest updateCustomerRequest);
 	List<CustomerListResponse> getAll();
 	List<CustomerListResponse> getByPageNumber(int pageNo, int pageSize);
+	List<CustomerListResponse> getAllSortedByDesc(String field);
+	List<CustomerListResponse> getAllSortedByAsc(String field);
 	CustomerGetResponse getById(String customerId);
 }

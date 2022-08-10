@@ -3,6 +3,10 @@ package com.etiya.northwind.business.concretes;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.SupplierService;
@@ -23,15 +27,6 @@ public class SupplierManager implements SupplierService{
 	public SupplierManager(SupplierRepository supplierRepository,ModelMapperService modelMapperService) {
 		this.supplierRepository = supplierRepository;
 		this.modelMapperService = modelMapperService;
-	}
-
-	@Override
-	public List<SupplierListResponse> getAll() {
-		List<Supplier> result = this.supplierRepository.findAll();
-		List<SupplierListResponse> response = result.stream().map(supplier -> this.modelMapperService.forResponse()
-				.map(supplier, SupplierListResponse.class)).collect(Collectors.toList());
-		
-		return response;
 	}
 
 	@Override
@@ -62,6 +57,48 @@ public class SupplierManager implements SupplierService{
 		SupplierGetResponse supplierResponse = this.modelMapperService.forResponse()
 				.map(supplier, SupplierGetResponse.class);
 		return supplierResponse;
+	}
+
+	@Override
+	public List<SupplierListResponse> getAll() {
+		List<Supplier> result = this.supplierRepository.findAll();
+		List<SupplierListResponse> response = result.stream().map(supplier -> this.modelMapperService.forResponse()
+				.map(supplier, SupplierListResponse.class)).collect(Collectors.toList());
+		
+		return response;
+	}
+
+	@Override
+	public List<SupplierListResponse> getByPageNumber(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo, pageSize);
+		
+		List<Supplier> result = this.supplierRepository.findAll(pageable).getContent();
+		List<SupplierListResponse> response = result.stream().map(supplier -> this.modelMapperService.forResponse()
+				.map(supplier, SupplierListResponse.class)).collect(Collectors.toList());
+		
+		return response;
+	}
+
+	@Override
+	public List<SupplierListResponse> getAllSortedByDesc(String field) {
+		Sort sort = Sort.by(Sort.Order.desc(field));
+		
+		List<Supplier> result = this.supplierRepository.findAll(sort);
+		List<SupplierListResponse> response = result.stream().map(supplier -> this.modelMapperService.forResponse()
+				.map(supplier, SupplierListResponse.class)).collect(Collectors.toList());
+		
+		return response;
+	}
+
+	@Override
+	public List<SupplierListResponse> getAllSortedByAsc(String field) {
+		Sort sort = Sort.by(Sort.Order.asc(field));
+		
+		List<Supplier> result = this.supplierRepository.findAll(sort);
+		List<SupplierListResponse> response = result.stream().map(supplier -> this.modelMapperService.forResponse()
+				.map(supplier, SupplierListResponse.class)).collect(Collectors.toList());
+		
+		return response;
 	}
 
 }

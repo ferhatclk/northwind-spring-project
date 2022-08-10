@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.etiya.northwind.business.abstracts.CategoryService;
@@ -38,8 +41,6 @@ public class CategoryManager implements CategoryService{
 
 	@Override
 	public void delete(DeleteCategoryRequest deleteCategoryRequest) {
-//		Category category = this.modelMapperService.forRequest().map(deleteCategoryRequest, Category.class);
-//		this.categoryRepository.delete(category);
 		this.categoryRepository.deleteById(deleteCategoryRequest.getCategoryId());
 	}
 
@@ -63,6 +64,40 @@ public class CategoryManager implements CategoryService{
 	@Override
 	public List<CategoryListResponse> getAll() {
 		List<Category> result = this.categoryRepository.findAll();
+		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
+				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
+		
+		return response;
+	}
+
+
+	@Override
+	public List<CategoryListResponse> getAllSortedByDesc(String field) {
+		Sort sort = Sort.by(Sort.Order.desc(field));
+		List<Category> result = this.categoryRepository.findAll(sort);
+		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
+				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
+		
+		return response;
+	}
+
+
+	@Override
+	public List<CategoryListResponse> getAllSortedByAsc(String field) {
+		Sort sort = Sort.by(Sort.Order.asc(field));
+		List<Category> result = this.categoryRepository.findAll(sort);
+		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
+				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
+		
+		return response;
+	}
+
+
+	@Override
+	public List<CategoryListResponse> getByPageNumber(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+		
+		List<Category> result = this.categoryRepository.findAll(pageable).getContent();
 		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
 				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
 		

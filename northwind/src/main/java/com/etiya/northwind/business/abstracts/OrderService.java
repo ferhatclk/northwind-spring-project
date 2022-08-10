@@ -14,5 +14,8 @@ public interface OrderService {
 	void delete(DeleteOrderRequest deleteOrderRequest);
 	void update(UpdateOrderRequest updateOrderRequest);
 	List<OrderListResponse> getAll();
+	List<OrderListResponse> getByPageNumber(int pageNo, int pageSize);
+	List<OrderListResponse> getAllSortedByDesc(String field);
+	List<OrderListResponse> getAllSortedByAsc(String field);
 	OrderGetResponse getById(int id);
 }

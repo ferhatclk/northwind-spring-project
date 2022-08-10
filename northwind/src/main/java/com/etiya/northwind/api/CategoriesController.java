@@ -53,4 +53,19 @@ public class CategoriesController {
 	public List<CategoryListResponse> getAll(){
 		return this.categoryService.getAll();
 	}
+	
+	@GetMapping("/getbypageno")
+	public List<CategoryListResponse> getByPageNo(int pageNo, int pageSize){
+		return this.categoryService.getByPageNumber(pageNo, pageSize);
+	}
+	
+	@GetMapping("/getallsortedbydesc")
+	public List<CategoryListResponse> getAllSortedByDesc(@RequestParam String field){
+		return this.categoryService.getAllSortedByDesc(field);
+	}
+	
+	@GetMapping("/getallsortedbyasc")
+	public List<CategoryListResponse> getAllSortedByAsc(@RequestParam String field){
+		return this.categoryService.getAllSortedByAsc(field);
+	}
 }
