@@ -2,6 +2,7 @@ package com.etiya.northwind.api;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,53 +16,56 @@ import com.etiya.northwind.business.requests.employees.DeleteEmployeeRequest;
 import com.etiya.northwind.business.requests.employees.UpdateEmployeeRequest;
 import com.etiya.northwind.business.responses.employees.EmployeeGetResponse;
 import com.etiya.northwind.business.responses.employees.EmployeeListResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeesController {
 	private EmployeeService employeeService;
 
+	@Autowired
     public EmployeesController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
-        this.employeeService.add(createEmployeeRequest);
+    public Result add(@RequestBody CreateEmployeeRequest createEmployeeRequest) {
+        return this.employeeService.add(createEmployeeRequest);
     }
 
     @PostMapping("/delete")
-    public void delete(@RequestBody DeleteEmployeeRequest deleteEmployeeRequest) {
-        this.employeeService.delete(deleteEmployeeRequest);
+    public Result delete(@RequestBody DeleteEmployeeRequest deleteEmployeeRequest) {
+        return this.employeeService.delete(deleteEmployeeRequest);
     }
 
     @PostMapping("/update")
-    public void update(@RequestBody UpdateEmployeeRequest updateEmployeeRequest) {
-        this.employeeService.update(updateEmployeeRequest);
+    public Result update(@RequestBody UpdateEmployeeRequest updateEmployeeRequest) {
+        return this.employeeService.update(updateEmployeeRequest);
     }
 
     @GetMapping("/getbyid")
-    public EmployeeGetResponse getById(@RequestParam int id) {
+    public DataResult<EmployeeGetResponse> getById(@RequestParam int id) {
         return this.employeeService.getById(id);
     }
 
     @GetMapping("/getall")
-    public List<EmployeeListResponse> getAll(){
+    public DataResult<List<EmployeeListResponse>> getAll(){
         return this.employeeService.getAll();
     }
 	
     @GetMapping("/getbypageno")
-	public List<EmployeeListResponse> getByPageNo(int pageNo, int pageSize){
-		return this.employeeService.getByPageNumber(pageNo, pageSize);
+	public DataResult<List<EmployeeListResponse>> getByPageNo(int pageNo, int pageSize){
+		return this.employeeService.getAllByPageNumber(pageNo, pageSize);
 	}
 	
 	@GetMapping("/getallsortedbydesc")
-	public List<EmployeeListResponse> getAllSortedByDesc(@RequestParam String field){
+	public DataResult<List<EmployeeListResponse>> getAllSortedByDesc(@RequestParam String field){
 		return this.employeeService.getAllSortedByDesc(field);
 	}
 	
 	@GetMapping("/getallsortedbyasc")
-	public List<EmployeeListResponse> getAllSortedByAsc(@RequestParam String field){
+	public DataResult<List<EmployeeListResponse>> getAllSortedByAsc(@RequestParam String field){
 		return this.employeeService.getAllSortedByAsc(field);
 	}
 }

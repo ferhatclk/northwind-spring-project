@@ -7,15 +7,18 @@ import com.etiya.northwind.business.requests.employees.DeleteEmployeeRequest;
 import com.etiya.northwind.business.requests.employees.UpdateEmployeeRequest;
 import com.etiya.northwind.business.responses.employees.EmployeeGetResponse;
 import com.etiya.northwind.business.responses.employees.EmployeeListResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 
 public interface EmployeeService {
-	void add(CreateEmployeeRequest createEmployeeRequest);
-	void delete(DeleteEmployeeRequest deleteEmployeeRequest);
-	void update(UpdateEmployeeRequest updateEmployeeRequest);
-	List<EmployeeListResponse> getAll();
-	List<EmployeeListResponse> getByPageNumber(int pageNo, int pageSize);
-	List<EmployeeListResponse> getAllSortedByDesc(String field);
-	List<EmployeeListResponse> getAllSortedByAsc(String field);
-	EmployeeGetResponse getById(int id);
+	Result add(CreateEmployeeRequest createEmployeeRequest);
+	Result delete(DeleteEmployeeRequest deleteEmployeeRequest);
+	Result update(UpdateEmployeeRequest updateEmployeeRequest);
+	DataResult<EmployeeGetResponse> getById(int id);
+	DataResult<List<EmployeeListResponse>>  getAll();
+	DataResult<List<EmployeeListResponse>> getAllByPageNumber(int pageNo, int pageSize);
+	DataResult<List<EmployeeListResponse>> getAllSortedByDesc(String field);
+	DataResult<List<EmployeeListResponse>> getAllSortedByAsc(String field);
+	
 }

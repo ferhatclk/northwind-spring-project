@@ -38,6 +38,9 @@ public class Employee {
 	@Column(name="address")
 	private String address;
 	
+	@Column(name ="reports_to")
+	private int reports;
+	
 	@OneToMany(mappedBy = "employee")
 	private List<Order> orders;
 }

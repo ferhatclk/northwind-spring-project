@@ -22,4 +22,6 @@ public class EmployeeListResponse {
 	private LocalDate birthDate;
 	
 	private String address;
+	
+	private int reports;
 }

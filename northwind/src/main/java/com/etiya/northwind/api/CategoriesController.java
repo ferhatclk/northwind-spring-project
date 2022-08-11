@@ -16,6 +16,7 @@ import com.etiya.northwind.business.requests.categories.DeleteCategoryRequest;
 import com.etiya.northwind.business.requests.categories.UpdateCategoryRequest;
 import com.etiya.northwind.business.responses.categories.CategoryGetResponse;
 import com.etiya.northwind.business.responses.categories.CategoryListResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
 
 
 
@@ -45,27 +46,27 @@ public class CategoriesController {
 	}
 	
 	@GetMapping("/getbyid")
-	public CategoryGetResponse getById(@RequestParam int id) {
+	public DataResult<CategoryGetResponse> getById(@RequestParam int id) {
 		return this.categoryService.getById(id);
 	}
 	
 	@GetMapping("/getall")
-	public List<CategoryListResponse> getAll(){
+	public DataResult<List<CategoryListResponse>> getAll(){
 		return this.categoryService.getAll();
 	}
 	
 	@GetMapping("/getbypageno")
-	public List<CategoryListResponse> getByPageNo(int pageNo, int pageSize){
-		return this.categoryService.getByPageNumber(pageNo, pageSize);
+	public DataResult<List<CategoryListResponse>> getByPageNo(int pageNo, int pageSize){
+		return this.categoryService.getAllByPageNumber(pageNo, pageSize);
 	}
 	
 	@GetMapping("/getallsortedbydesc")
-	public List<CategoryListResponse> getAllSortedByDesc(@RequestParam String field){
+	public DataResult<List<CategoryListResponse>> getAllSortedByDesc(@RequestParam String field){
 		return this.categoryService.getAllSortedByDesc(field);
 	}
 	
 	@GetMapping("/getallsortedbyasc")
-	public List<CategoryListResponse> getAllSortedByAsc(@RequestParam String field){
+	public DataResult<List<CategoryListResponse>> getAllSortedByAsc(@RequestParam String field){
 		return this.categoryService.getAllSortedByAsc(field);
 	}
 }

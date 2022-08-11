@@ -2,6 +2,7 @@ package com.etiya.northwind.api;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,53 +16,56 @@ import com.etiya.northwind.business.requests.suppliers.DeleteSupplierRequest;
 import com.etiya.northwind.business.requests.suppliers.UpdateSupplierRequest;
 import com.etiya.northwind.business.responses.suppliers.SupplierGetResponse;
 import com.etiya.northwind.business.responses.suppliers.SupplierListResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 @RestController
 @RequestMapping("/api/suppliers")
 public class SuppliersController {
 	private SupplierService supplierService;
-
+	
+	@Autowired
 	public SuppliersController(SupplierService supplierService) {
 		this.supplierService = supplierService;
 	}
 	
 	@PostMapping("/add")
-	public void add(@RequestBody CreateSupplierRequest createSupplierRequest) {
-		this.supplierService.add(createSupplierRequest);
+	public Result add(@RequestBody CreateSupplierRequest createSupplierRequest) {
+		return this.supplierService.add(createSupplierRequest);
 	}
 	
 	@PostMapping("/delete")
-	public void delete(@RequestBody DeleteSupplierRequest deleteSupplierRequest) {
-		this.supplierService.delete(deleteSupplierRequest);
+	public Result delete(@RequestBody DeleteSupplierRequest deleteSupplierRequest) {
+		return this.supplierService.delete(deleteSupplierRequest);
 	}
 	
 	@PostMapping("/update")
-	public void update(@RequestBody UpdateSupplierRequest updateSupplierRequest) {
-		this.supplierService.update(updateSupplierRequest);
+	public Result update(@RequestBody UpdateSupplierRequest updateSupplierRequest) {
+		return this.supplierService.update(updateSupplierRequest);
 	}
 	
 	@GetMapping("/getbyid")
-	public SupplierGetResponse getById(@RequestParam int id) {
+	public DataResult<SupplierGetResponse> getById(@RequestParam int id) {
 		return this.supplierService.getById(id);
 	}
 	
 	@GetMapping("/getall")
-	public List<SupplierListResponse> getAll(){
+	public DataResult<List<SupplierListResponse>> getAll(){
 		return this.supplierService.getAll();
 	}
 	
 	@GetMapping("/getbypageno")
-	public List<SupplierListResponse> getByPageNo(int pageNo, int pageSize){
-		return this.supplierService.getByPageNumber(pageNo, pageSize);
+	public DataResult<List<SupplierListResponse>> getByPageNo(int pageNo, int pageSize){
+		return this.supplierService.getAllByPageNumber(pageNo, pageSize);
 	}
 	
 	@GetMapping("/getallsortedbydesc")
-	public List<SupplierListResponse> getAllSortedByDesc(@RequestParam String field){
+	public DataResult<List<SupplierListResponse>> getAllSortedByDesc(@RequestParam String field){
 		return this.supplierService.getAllSortedByDesc(field);
 	}
 	
 	@GetMapping("/getallsortedbyasc")
-	public List<SupplierListResponse> getAllSortedByAsc(@RequestParam String field){
+	public DataResult<List<SupplierListResponse>> getAllSortedByAsc(@RequestParam String field){
 		return this.supplierService.getAllSortedByAsc(field);
 	}
 }

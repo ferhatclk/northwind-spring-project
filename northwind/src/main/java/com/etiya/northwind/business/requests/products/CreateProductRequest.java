@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateProductRequest {
-	
+	@Positive
 	private int productId;
 	
 	@NotBlank

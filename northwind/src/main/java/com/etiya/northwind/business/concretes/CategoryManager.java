@@ -15,7 +15,12 @@ import com.etiya.northwind.business.requests.categories.DeleteCategoryRequest;
 import com.etiya.northwind.business.requests.categories.UpdateCategoryRequest;
 import com.etiya.northwind.business.responses.categories.CategoryGetResponse;
 import com.etiya.northwind.business.responses.categories.CategoryListResponse;
+import com.etiya.northwind.core.exceptions.BusinessException;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
+import com.etiya.northwind.core.utilities.results.SuccessDataResult;
+import com.etiya.northwind.core.utilities.results.SuccessResult;
 import com.etiya.northwind.dataAccess.abstracts.CategoryRepository;
 import com.etiya.northwind.entities.concretes.Category;
 
@@ -33,75 +38,90 @@ public class CategoryManager implements CategoryService{
 
 	
 	@Override
-	public void add(CreateCategoryRequest createCategoryRequest) {
+	public Result add(CreateCategoryRequest createCategoryRequest) {
+		checkIfCategoryNameExist(createCategoryRequest.getCategoryName());
+		
 		Category category = this.modelMapperService.forRequest()
 				.map(createCategoryRequest, Category.class);
 		this.categoryRepository.save(category);
+		
+		return new SuccessResult();
 	}
 
 	@Override
-	public void delete(DeleteCategoryRequest deleteCategoryRequest) {
+	public Result delete(DeleteCategoryRequest deleteCategoryRequest) {
 		this.categoryRepository.deleteById(deleteCategoryRequest.getCategoryId());
+		
+		return new SuccessResult();
 	}
 
 
 	@Override
-	public void update(UpdateCategoryRequest updateCategoryRequest) {
+	public Result update(UpdateCategoryRequest updateCategoryRequest) {
+		checkIfCategoryNameExist(updateCategoryRequest.getCategoryName());
+		
 		Category category = this.modelMapperService.forRequest()
 				.map(updateCategoryRequest, Category.class);
-		this.categoryRepository.save(category);	
+		this.categoryRepository.save(category);
+		
+		return new SuccessResult();	
 	}
 
 
 	@Override
-	public CategoryGetResponse getById(int id) {
+	public DataResult<CategoryGetResponse> getById(int id) {
 		Category category = this.categoryRepository.findById(id).get();
 		CategoryGetResponse categoryResponse = this.modelMapperService.forResponse()
 				.map(category, CategoryGetResponse.class);
-		return categoryResponse;
+		return new SuccessDataResult<>(categoryResponse) ;
 	}
 
 	@Override
-	public List<CategoryListResponse> getAll() {
+	public DataResult<List<CategoryListResponse>> getAll() {
 		List<Category> result = this.categoryRepository.findAll();
 		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
 				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
 		
-		return response;
+		return new SuccessDataResult<List<CategoryListResponse>>(response) ;
 	}
 
 
 	@Override
-	public List<CategoryListResponse> getAllSortedByDesc(String field) {
+	public DataResult<List<CategoryListResponse>> getAllSortedByDesc(String field) {
 		Sort sort = Sort.by(Sort.Order.desc(field));
 		List<Category> result = this.categoryRepository.findAll(sort);
 		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
 				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
 		
-		return response;
+		return new SuccessDataResult<List<CategoryListResponse>>(response);
 	}
 
 
 	@Override
-	public List<CategoryListResponse> getAllSortedByAsc(String field) {
+	public DataResult<List<CategoryListResponse>> getAllSortedByAsc(String field) {
 		Sort sort = Sort.by(Sort.Order.asc(field));
 		List<Category> result = this.categoryRepository.findAll(sort);
 		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
 				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
 		
-		return response;
+		return new SuccessDataResult<List<CategoryListResponse>>(response);
 	}
 
 
 	@Override
-	public List<CategoryListResponse> getByPageNumber(int pageNo, int pageSize) {
+	public DataResult<List<CategoryListResponse>> getAllByPageNumber(int pageNo, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
 		
 		List<Category> result = this.categoryRepository.findAll(pageable).getContent();
 		List<CategoryListResponse> response = result.stream().map(category -> this.modelMapperService.forResponse()
 				.map(category, CategoryListResponse.class)).collect(Collectors.toList());
 		
-		return response;
+		return new SuccessDataResult<List<CategoryListResponse>>(response);
 	}
-
+	
+	private void checkIfCategoryNameExist(String categoryName) {
+		Category tempCategory = categoryRepository.findByCategoryName(categoryName);
+		if(null!=tempCategory)
+			throw new BusinessException("CATEGORY.NAME.EXİST");
+	}
 }

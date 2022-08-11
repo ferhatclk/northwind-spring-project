@@ -7,15 +7,18 @@ import com.etiya.northwind.business.requests.orders.DeleteOrderRequest;
 import com.etiya.northwind.business.requests.orders.UpdateOrderRequest;
 import com.etiya.northwind.business.responses.orders.OrderGetResponse;
 import com.etiya.northwind.business.responses.orders.OrderListResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 
 public interface OrderService {
-	void add(CreateOrderRequest createOrderRequest);
-	void delete(DeleteOrderRequest deleteOrderRequest);
-	void update(UpdateOrderRequest updateOrderRequest);
-	List<OrderListResponse> getAll();
-	List<OrderListResponse> getByPageNumber(int pageNo, int pageSize);
-	List<OrderListResponse> getAllSortedByDesc(String field);
-	List<OrderListResponse> getAllSortedByAsc(String field);
-	OrderGetResponse getById(int id);
+	Result add(CreateOrderRequest createOrderRequest);
+	Result delete(DeleteOrderRequest deleteOrderRequest);
+	Result update(UpdateOrderRequest updateOrderRequest);
+	DataResult<OrderGetResponse> getById(int id);
+	DataResult<List<OrderListResponse>>  getAll();
+	DataResult<List<OrderListResponse>> getAllByPageNumber(int pageNo, int pageSize);
+	DataResult<List<OrderListResponse>> getAllSortedByDesc(String field);
+	DataResult<List<OrderListResponse>> getAllSortedByAsc(String field);
+	
 }
