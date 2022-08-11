@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,8 +36,13 @@ public class Customer {
 	@Column(name="address")
 	private String address;
 	
-	@Column(name="city")
-	private String city;
+	@ManyToOne
+	@JoinColumn(name="city_id")
+	private City city;
+	
+	@ManyToOne
+	@JoinColumn(name="country_id")
+	private Country country;
 	
 	@OneToMany(mappedBy = "customer")
 	private List<Order> orders;

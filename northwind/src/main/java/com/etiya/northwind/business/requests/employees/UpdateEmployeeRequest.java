@@ -16,5 +16,5 @@ public class UpdateEmployeeRequest {
 	private String title;
 	private LocalDate birthDate;
 	private String address;
-	private int reports;
+	private int reportsTo;
 }

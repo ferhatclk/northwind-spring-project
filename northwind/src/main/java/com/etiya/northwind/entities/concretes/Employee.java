@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,8 +41,24 @@ public class Employee {
 	@Column(name="address")
 	private String address;
 	
-	@Column(name ="reports_to")
-	private int reports;
+	@Column(name = "reportsTo")
+	private int reportsTo;
+	
+	@ManyToOne()
+	@JoinColumn(name="employee_id",insertable = false, updatable = false)
+	private Employee parentEmployee;
+
+	@OneToMany(mappedBy = "parentEmployee")
+	private List<Employee> subEmployees;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="country_id")
+	private Country country;
+	
+	@ManyToOne
+	@JoinColumn(name="city_id")
+	private City city;
 	
 	@OneToMany(mappedBy = "employee")
 	private List<Order> orders;

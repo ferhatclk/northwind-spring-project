@@ -20,5 +20,5 @@ public class EmployeeGetResponse {
 	
 	private String address;
 	
-	private int reports;
+	private int reportsTo;
 }

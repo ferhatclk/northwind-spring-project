@@ -38,7 +38,7 @@ public class EmployeeManager implements EmployeeService{
 
     @Override
     public Result add(CreateEmployeeRequest createEmployeeRequest) {
-    	checkIfReportsCount(createEmployeeRequest.getReports());
+    	checkIfReportsCount(createEmployeeRequest.getReportsTo());
     	
         Employee employee = this.modelMapperService.forRequest().map(createEmployeeRequest, Employee.class);
         this.employeeRepository.save(employee);
@@ -55,7 +55,7 @@ public class EmployeeManager implements EmployeeService{
 
     @Override
     public Result update(UpdateEmployeeRequest updateEmployeeRequest) {
-    	checkIfReportsCount(updateEmployeeRequest.getReports());
+    	checkIfReportsCount(updateEmployeeRequest.getReportsTo());
     	
     	Employee employee = this.modelMapperService.forRequest().map(updateEmployeeRequest, Employee.class);
         this.employeeRepository.save(employee);
@@ -114,10 +114,7 @@ public class EmployeeManager implements EmployeeService{
 	}
 	
 	private void checkIfReportsCount(int reports) {
-		List<Employee> employees = employeeRepository.findByReports(reports);
-		for (Employee employee : employees) {
-			System.out.println(employee.getReports()); 
-		}
+		List<Employee> employees = employeeRepository.findByReportsTo(reports);
 		if(employees.size() > 9)
 			throw new BusinessException("REPORTS.COUNT.EXCEEDED");
 	}
