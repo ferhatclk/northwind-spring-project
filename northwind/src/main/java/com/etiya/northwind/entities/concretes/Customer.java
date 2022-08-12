@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -46,4 +47,7 @@ public class Customer {
 	
 	@OneToMany(mappedBy = "customer")
 	private List<Order> orders;
+	
+	@OneToOne(mappedBy = "customer")
+	private Cart cart;
 }

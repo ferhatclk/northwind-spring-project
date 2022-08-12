@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -41,15 +41,29 @@ public class Employee {
 	@Column(name="address")
 	private String address;
 	
-	@Column(name = "reportsTo")
-	private int reportsTo;
+//	@Column(name = "reports_to")
+//	private int reportsTo;
+//	
+//	@ManyToOne()
+//	@JoinColumn(name="reports_to",insertable = false, updatable = false)
+//	private Employee parentEmployee;
+//
+//	@OneToMany(mappedBy = "parentEmployee")
+//	private List<Employee> subEmployees;
 	
-	@ManyToOne()
-	@JoinColumn(name="employee_id",insertable = false, updatable = false)
+	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "reports_to", insertable = false, updatable = false)
 	private Employee parentEmployee;
+
+
+	@Column(name = "reports_to")
+	private Integer reportsTo;
 
 	@OneToMany(mappedBy = "parentEmployee")
 	private List<Employee> subEmployees;
+	
+	
+	
 	
 	
 	@ManyToOne
