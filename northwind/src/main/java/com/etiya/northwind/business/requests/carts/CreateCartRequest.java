@@ -1,5 +1,8 @@
 package com.etiya.northwind.business.requests.carts;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,12 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateCartRequest {
-
-	private int productId;
-	
+	@NotEmpty
+	@NotBlank
 	private String customerId;
 
-	private int quantity;
-	
-	private double unitPrice;
 }

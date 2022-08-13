@@ -1,6 +1,5 @@
-package com.etiya.northwind.business.requests.carts;
+package com.etiya.northwind.business.requests.cartDetails;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -9,14 +8,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class UpdateCartRequest {
+@NoArgsConstructor
+public class DeleteCartDetailRequest {
 	@NotNull
 	@Positive
-	private int cartId;
+	private int id;
 	
-	@NotNull
-	@NotBlank
-	private String customerId;
 }

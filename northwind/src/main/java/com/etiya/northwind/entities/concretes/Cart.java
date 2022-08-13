@@ -27,16 +27,20 @@ public class Cart {
 	@Column(name="cart_id")
 	private int cartId;
 	
-	@OneToMany(mappedBy = "cart")
-	private List<Product> products;
-	
-	@OneToOne()
-	@JoinColumn(name="customer_id")
-	private Customer customer;
-	
 	@Column(name="quantity")
 	private int quantity;
 	
-	@Column(name="unit_price")
-	private double unitPrice;
+	@Column(name="total_price")
+	private double totalPrice;
+	
+	@Column(name="customer_id")
+	private String customerId;
+	
+	@OneToOne()
+	@JoinColumn(name="customer_id", insertable = false, updatable = false)
+	private Customer customer;
+	
+	@OneToMany(mappedBy = "cart")
+	private List<CartDetail> cartDetails;
+
 }

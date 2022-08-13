@@ -11,6 +11,7 @@ import com.etiya.northwind.business.responses.products.ProductGetResponse;
 import com.etiya.northwind.business.responses.products.ProductListResponse;
 import com.etiya.northwind.core.utilities.results.DataResult;
 import com.etiya.northwind.core.utilities.results.Result;
+import com.etiya.northwind.entities.concretes.Product;
 
 
 public interface ProductService {
@@ -22,4 +23,6 @@ public interface ProductService {
 	DataResult<List<ProductListResponse>> getAllByPageNumber(int pageNo,int pageSize);
 	DataResult<List<ProductListResponse>> getAllSortedByDesc(String field);
 	DataResult<List<ProductListResponse>> getAllSortedByAsc(String field);
+	
+	Product getByProduct(int id);
 }

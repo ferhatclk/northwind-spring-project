@@ -78,7 +78,7 @@ public class ProductManager implements ProductService{
 
 	@Override
 	public DataResult<ProductGetResponse>  getById(int id) {
-		Product product = this.productRepository.findById(id).get();
+		Product product = this.productRepository.findByProductId(id);
 		ProductGetResponse productResponse = this.modelMapperService.forResponse()
 				.map(product, ProductGetResponse.class);
 		
@@ -133,7 +133,11 @@ public class ProductManager implements ProductService{
         return new SuccessDataResult<List<ProductListResponse>>(response) ;
     }
     
-    
+	@Override
+	public Product getByProduct(int id) {
+		Product product = this.productRepository.findByProductId(id);
+		return product;
+	}
     
     private void checkIfCategoryCount(int id) {
 
@@ -148,4 +152,5 @@ public class ProductManager implements ProductService{
     	if(tempProduct!=null)
     			throw new BusinessException("PRODUCT.EXİST");
     }
+
 }

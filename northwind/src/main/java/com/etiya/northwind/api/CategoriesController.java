@@ -19,7 +19,6 @@ import com.etiya.northwind.business.responses.categories.CategoryListResponse;
 import com.etiya.northwind.core.utilities.results.DataResult;
 
 
-
 @RestController
 @RequestMapping("/api/categories")
 public class CategoriesController {

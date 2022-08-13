@@ -41,30 +41,20 @@ public class Employee {
 	@Column(name="address")
 	private String address;
 	
-//	@Column(name = "reports_to")
-//	private int reportsTo;
-//	
-//	@ManyToOne()
-//	@JoinColumn(name="reports_to",insertable = false, updatable = false)
-//	private Employee parentEmployee;
-//
-//	@OneToMany(mappedBy = "parentEmployee")
-//	private List<Employee> subEmployees;
+	/****** Self-referencing id <-> employee_id (pk) -> reports_to (fk)  ******/
+	
+	@Column(name = "reports_to")
+	private Integer reportsTo;
 	
 	@ManyToOne(targetEntity = Employee.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "reports_to", insertable = false, updatable = false)
 	private Employee parentEmployee;
 
 
-	@Column(name = "reports_to")
-	private Integer reportsTo;
-
 	@OneToMany(mappedBy = "parentEmployee")
 	private List<Employee> subEmployees;
 	
-	
-	
-	
+	/*******************************************/
 	
 	@ManyToOne
 	@JoinColumn(name="country_id")
